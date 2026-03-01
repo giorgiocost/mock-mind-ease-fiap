@@ -1,0 +1,413 @@
+{
+  "users": [
+    {
+      "id": "user-001",
+      "email": "ana.silva@example.com",
+      "passwordHash": "mock-hash-Senha@123",
+      "name": "Ana Silva",
+      "createdAt": "2026-02-01T08:30:00.000Z",
+      "updatedAt": "2026-02-10T10:15:00.000Z"
+    },
+    {
+      "id": "user-002",
+      "email": "bruno.costa@example.com",
+      "passwordHash": "mock-hash-Senha@456",
+      "name": "Bruno Costa",
+      "createdAt": "2026-02-02T09:00:00.000Z",
+      "updatedAt": "2026-02-09T14:30:00.000Z"
+    },
+    {
+      "id": "user-003",
+      "email": "carlos.santos@example.com",
+      "passwordHash": "mock-hash-Senha@789",
+      "name": "Carlos Santos",
+      "createdAt": "2026-02-03T11:45:00.000Z",
+      "updatedAt": "2026-02-08T16:00:00.000Z"
+    }
+  ],
+  "preferences": [
+    {
+      "id": "pref-001",
+      "userId": "user-001",
+      "theme": "light",
+      "language": "pt-BR",
+      "notifications": {
+        "breakReminders": true,
+        "taskDeadlines": true,
+        "cognitiveAlerts": true,
+        "soundEnabled": false
+      },
+      "accessibility": {
+        "fontSize": "medium",
+        "highContrast": false,
+        "reducedMotion": false,
+        "screenReaderOptimized": false
+      },
+      "pomodoro": {
+        "workDuration": 25,
+        "shortBreakDuration": 5,
+        "longBreakDuration": 15,
+        "sessionsBeforeLongBreak": 4
+      },
+      "aiAssistant": {
+        "enabled": true,
+        "proactiveAlerts": true,
+        "contextualSuggestions": true
+      },
+      "createdAt": "2026-02-01T08:35:00.000Z",
+      "updatedAt": "2026-02-10T10:15:00.000Z"
+    },
+    {
+      "id": "pref-002",
+      "userId": "user-002",
+      "theme": "dark",
+      "language": "en-US",
+      "notifications": {
+        "breakReminders": true,
+        "taskDeadlines": false,
+        "cognitiveAlerts": true,
+        "soundEnabled": true
+      },
+      "accessibility": {
+        "fontSize": "large",
+        "highContrast": true,
+        "reducedMotion": true,
+        "screenReaderOptimized": false
+      },
+      "pomodoro": {
+        "workDuration": 50,
+        "shortBreakDuration": 10,
+        "longBreakDuration": 30,
+        "sessionsBeforeLongBreak": 3
+      },
+      "aiAssistant": {
+        "enabled": true,
+        "proactiveAlerts": false,
+        "contextualSuggestions": true
+      },
+      "createdAt": "2026-02-02T09:05:00.000Z",
+      "updatedAt": "2026-02-09T14:30:00.000Z"
+    },
+    {
+      "id": "pref-003",
+      "userId": "user-003",
+      "theme": "auto",
+      "language": "pt-BR",
+      "notifications": {
+        "breakReminders": false,
+        "taskDeadlines": true,
+        "cognitiveAlerts": false,
+        "soundEnabled": false
+      },
+      "accessibility": {
+        "fontSize": "small",
+        "highContrast": false,
+        "reducedMotion": false,
+        "screenReaderOptimized": true
+      },
+      "pomodoro": {
+        "workDuration": 30,
+        "shortBreakDuration": 5,
+        "longBreakDuration": 20,
+        "sessionsBeforeLongBreak": 4
+      },
+      "aiAssistant": {
+        "enabled": false,
+        "proactiveAlerts": false,
+        "contextualSuggestions": false
+      },
+      "createdAt": "2026-02-03T11:50:00.000Z",
+      "updatedAt": "2026-02-08T16:00:00.000Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "userId": "user-001",
+      "title": "Implementar autenticação JWT",
+      "description": "Adicionar JWT tokens no backend e validação de sessões",
+      "status": "DONE",
+      "position": 0,
+      "createdAt": "2026-02-01T09:00:00.000Z",
+      "updatedAt": "2026-02-05T17:30:00.000Z"
+    },
+    {
+      "id": 2,
+      "userId": "user-001",
+      "title": "Criar componente de dashboard",
+      "description": "Dashboard com métricas de produtividade e gráficos",
+      "status": "DOING",
+      "position": 0,
+      "createdAt": "2026-02-03T10:15:00.000Z",
+      "updatedAt": "2026-02-10T09:45:00.000Z"
+    },
+    {
+      "id": 3,
+      "userId": "user-001",
+      "title": "Refatorar sistema de notificações",
+      "description": "Melhorar performance e adicionar rate limiting",
+      "status": "TODO",
+      "position": 0,
+      "createdAt": "2026-02-06T14:20:00.000Z",
+      "updatedAt": "2026-02-06T14:20:00.000Z"
+    },
+    {
+      "id": 4,
+      "userId": "user-002",
+      "title": "Configurar CI/CD pipeline",
+      "description": "Setup GitHub Actions para testes e deploy automático",
+      "status": "DONE",
+      "position": 0,
+      "createdAt": "2026-02-02T11:00:00.000Z",
+      "updatedAt": "2026-02-07T16:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "userId": "user-002",
+      "title": "Implementar testes E2E",
+      "description": "Cypress para testes de integração completos",
+      "status": "DOING",
+      "position": 0,
+      "createdAt": "2026-02-04T08:30:00.000Z",
+      "updatedAt": "2026-02-09T13:15:00.000Z"
+    },
+    {
+      "id": 6,
+      "userId": "user-002",
+      "title": "Documentar API REST",
+      "description": "Swagger/OpenAPI documentation completa",
+      "status": "TODO",
+      "position": 0,
+      "createdAt": "2026-02-08T10:00:00.000Z",
+      "updatedAt": "2026-02-08T10:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "userId": "user-002",
+      "title": "Otimizar queries do banco",
+      "description": "Adicionar índices e melhorar performance",
+      "status": "TODO",
+      "position": 1,
+      "createdAt": "2026-02-09T15:45:00.000Z",
+      "updatedAt": "2026-02-09T15:45:00.000Z"
+    },
+    {
+      "id": 8,
+      "userId": "user-003",
+      "title": "Code review do módulo de tasks",
+      "description": "Revisar PRs #45, #47 e #49",
+      "status": "DONE",
+      "position": 0,
+      "createdAt": "2026-02-03T13:00:00.000Z",
+      "updatedAt": "2026-02-04T18:30:00.000Z"
+    },
+    {
+      "id": 9,
+      "userId": "user-003",
+      "title": "Implementar dark mode",
+      "description": "Suporte a tema escuro em todos os componentes",
+      "status": "DOING",
+      "position": 0,
+      "createdAt": "2026-02-05T09:30:00.000Z",
+      "updatedAt": "2026-02-10T11:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "userId": "user-003",
+      "title": "Migrar para TypeScript 5.0",
+      "description": "Atualizar todas as dependências e types",
+      "status": "TODO",
+      "position": 0,
+      "createdAt": "2026-02-07T16:15:00.000Z",
+      "updatedAt": "2026-02-07T16:15:00.000Z"
+    }
+  ],
+  "checklistItems": [
+    {
+      "id": "checklist-001",
+      "taskId": 2,
+      "text": "Criar estrutura de componentes",
+      "completed": true,
+      "order": 0,
+      "createdAt": "2026-02-03T10:20:00.000Z",
+      "updatedAt": "2026-02-04T15:00:00.000Z"
+    },
+    {
+      "id": "checklist-002",
+      "taskId": 2,
+      "text": "Integrar biblioteca de gráficos",
+      "completed": true,
+      "order": 1,
+      "createdAt": "2026-02-03T10:21:00.000Z",
+      "updatedAt": "2026-02-06T11:30:00.000Z"
+    },
+    {
+      "id": "checklist-003",
+      "taskId": 2,
+      "text": "Adicionar testes unitários",
+      "completed": false,
+      "order": 2,
+      "createdAt": "2026-02-03T10:22:00.000Z",
+      "updatedAt": "2026-02-03T10:22:00.000Z"
+    },
+    {
+      "id": "checklist-004",
+      "taskId": 5,
+      "text": "Setup Cypress no projeto",
+      "completed": true,
+      "order": 0,
+      "createdAt": "2026-02-04T08:35:00.000Z",
+      "updatedAt": "2026-02-05T10:00:00.000Z"
+    },
+    {
+      "id": "checklist-005",
+      "taskId": 5,
+      "text": "Criar suite de testes de login",
+      "completed": false,
+      "order": 1,
+      "createdAt": "2026-02-04T08:36:00.000Z",
+      "updatedAt": "2026-02-04T08:36:00.000Z"
+    }
+  ],
+  "taskNotes": [
+    {
+      "id": "note-001",
+      "taskId": 2,
+      "content": "Usar Chart.js para gráficos. Considerar alternativa com D3.js se precisar de customizações avançadas.",
+      "createdAt": "2026-02-04T14:30:00.000Z",
+      "updatedAt": "2026-02-04T14:30:00.000Z"
+    },
+    {
+      "id": "note-002",
+      "taskId": 5,
+      "content": "Cypress flaky em testes que dependem de timeout. Verificar configuração de retry e aumentar timeouts se necessário.",
+      "createdAt": "2026-02-09T13:20:00.000Z",
+      "updatedAt": "2026-02-09T13:20:00.000Z"
+    },
+    {
+      "id": "note-003",
+      "taskId": 9,
+      "content": "CSS variables funcionando bem. Lembrar de testar com high contrast mode do sistema operacional.",
+      "createdAt": "2026-02-10T11:05:00.000Z",
+      "updatedAt": "2026-02-10T11:05:00.000Z"
+    }
+  ],
+  "focusSessions": [
+    {
+      "id": "session-001",
+      "userId": "user-001",
+      "taskId": 2,
+      "status": "DONE",
+      "startTime": "2026-02-10T09:00:00.000Z",
+      "endTime": "2026-02-10T09:25:00.000Z",
+      "duration": 1500,
+      "type": "POMODORO",
+      "createdAt": "2026-02-10T09:00:00.000Z",
+      "updatedAt": "2026-02-10T09:25:00.000Z"
+    },
+    {
+      "id": "session-002",
+      "userId": "user-002",
+      "taskId": 5,
+      "status": "RUNNING",
+      "startTime": "2026-02-10T10:00:00.000Z",
+      "endTime": null,
+      "duration": null,
+      "type": "POMODORO",
+      "createdAt": "2026-02-10T10:00:00.000Z",
+      "updatedAt": "2026-02-10T10:00:00.000Z"
+    },
+    {
+      "id": "session-003",
+      "userId": "user-003",
+      "taskId": 9,
+      "status": "PAUSED",
+      "startTime": "2026-02-10T08:30:00.000Z",
+      "endTime": null,
+      "duration": 900,
+      "type": "DEEP_WORK",
+      "createdAt": "2026-02-10T08:30:00.000Z",
+      "updatedAt": "2026-02-10T08:45:00.000Z"
+    }
+  ],
+  "cognitiveAlerts": [
+    {
+      "id": "alert-001",
+      "userId": "user-001",
+      "type": "BREAK_SUGGESTION",
+      "severity": "MEDIUM",
+      "message": "Você está trabalhando há 2 horas sem pausas. Considere fazer uma pausa de 15 minutos.",
+      "metadata": {
+        "workDuration": 120,
+        "suggestionType": "scheduled_break",
+        "lastBreakTime": "2026-02-10T07:00:00.000Z"
+      },
+      "dismissed": false,
+      "createdAt": "2026-02-10T09:00:00.000Z",
+      "updatedAt": "2026-02-10T09:00:00.000Z"
+    },
+    {
+      "id": "alert-002",
+      "userId": "user-002",
+      "type": "OVERLOAD",
+      "severity": "HIGH",
+      "message": "Você tem 12 tarefas ativas. Considere priorizar ou delegar algumas.",
+      "metadata": {
+        "activeTasksCount": 12,
+        "todoCount": 8,
+        "doingCount": 4,
+        "recommendation": "focus_on_priorities"
+      },
+      "dismissed": true,
+      "createdAt": "2026-02-09T14:30:00.000Z",
+      "updatedAt": "2026-02-09T15:00:00.000Z"
+    }
+  ],
+  "telemetryEvents": [
+    {
+      "id": "event-001",
+      "userId": "user-001",
+      "eventType": "focusModeToggled",
+      "eventData": {
+        "enabled": true,
+        "taskId": 2,
+        "sessionType": "POMODORO"
+      },
+      "createdAt": "2026-02-10T09:00:00.000Z"
+    },
+    {
+      "id": "event-002",
+      "userId": "user-002",
+      "eventType": "uiDensityChanged",
+      "eventData": {
+        "from": "comfortable",
+        "to": "compact"
+      },
+      "createdAt": "2026-02-09T14:30:00.000Z"
+    },
+    {
+      "id": "event-003",
+      "userId": "user-003",
+      "eventType": "taskMoved",
+      "eventData": {
+        "taskId": 9,
+        "fromStatus": "TODO",
+        "toStatus": "DOING",
+        "position": 0
+      },
+      "createdAt": "2026-02-10T11:00:00.000Z"
+    },
+    {
+      "id": "event-004",
+      "userId": "user-001",
+      "eventType": "pomodoroCompleted",
+      "eventData": {
+        "sessionId": "session-001",
+        "taskId": 2,
+        "duration": 1500,
+        "interruptions": 0
+      },
+      "createdAt": "2026-02-10T09:25:00.000Z"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"users":[{"id":"user-test-123","email":"teste-pref@example.com","passwordHash":"mock-hash-Senha@123","name":"Teste","createdAt":"2026-02-10T04:47:54.322Z","updatedAt":"2026-02-10T04:47:54.322Z"}],"preferences":[],"tasks":[],"checklistItems":[],"taskNotes":[],"focusSessions":[],"cognitiveAlerts":[],"telemetryEvents":[]}

@@ -1,0 +1,220 @@
+{
+  "users": [
+    {
+      "id": "user-1770849775463",
+      "email": "daniel@example.com",
+      "passwordHash": "mock-hash-Senha@123",
+      "name": "Daniel Simão",
+      "createdAt": "2026-02-11T22:42:55.463Z",
+      "updatedAt": "2026-02-11T22:42:55.463Z"
+    },
+    {
+      "id": "user-1771220528104",
+      "email": "joao.silva@example.com",
+      "passwordHash": "mock-hash-Senha@123",
+      "name": "João Silva",
+      "createdAt": "2026-02-16T05:42:08.104Z",
+      "updatedAt": "2026-02-16T05:42:08.104Z"
+    },
+    {
+      "id": "user-1771290921689",
+      "email": "gegiorgio1991@gmail.com",
+      "passwordHash": "mock-hash-1234567",
+      "name": "Giorgio Costa",
+      "createdAt": "2026-02-17T01:15:21.689Z",
+      "updatedAt": "2026-02-17T01:15:21.689Z"
+    }
+  ],
+  "preferences": [
+    {
+      "id": "pref-1770849831066",
+      "userId": "user-1770849775463",
+      "uiDensity": "medium",
+      "focusMode": false,
+      "contentMode": "detailed",
+      "contrast": "normal",
+      "fontScale": 1,
+      "spacingScale": 1,
+      "motion": "full",
+      "timersEnabled": true,
+      "breakReminders": true,
+      "alertThresholdMinutes": 25,
+      "createdAt": "2026-02-11T22:43:51.067Z",
+      "updatedAt": "2026-02-11T22:43:51.067Z"
+    },
+    {
+      "id": "pref-1771294414966",
+      "userId": "user-1771290921689",
+      "uiDensity": "simple",
+      "focusMode": true,
+      "contentMode": "detailed",
+      "contrast": "normal",
+      "fontScale": 1.4,
+      "spacingScale": 1.1,
+      "motion": "full",
+      "timersEnabled": true,
+      "breakReminders": true,
+      "alertThresholdMinutes": 25,
+      "createdAt": "2026-02-17T02:13:34.966Z",
+      "updatedAt": "2026-02-17T02:33:53.634Z"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "wqewqe",
+      "description": "ewqeqw",
+      "status": "TODO",
+      "position": 0,
+      "createdAt": "2026-02-17T01:19:53.833Z",
+      "updatedAt": "2026-02-17T01:19:53.833Z",
+      "userId": "user-1771220528104",
+      "id": 12
+    },
+    {
+      "title": "aaaa",
+      "description": "aaaa",
+      "status": "TODO",
+      "position": 1,
+      "createdAt": "2026-02-17T01:21:43.782Z",
+      "updatedAt": "2026-02-17T01:21:43.782Z",
+      "userId": "user-1771220528104",
+      "id": 13
+    },
+    {
+      "title": "bbbb",
+      "description": "bbbbb",
+      "status": "TODO",
+      "position": 2,
+      "createdAt": "2026-02-17T01:21:54.071Z",
+      "updatedAt": "2026-02-17T01:21:54.071Z",
+      "userId": "user-1771220528104",
+      "id": 14
+    },
+    {
+      "title": "dsdsd",
+      "description": "dsdsd",
+      "status": "TODO",
+      "position": 3,
+      "createdAt": "2026-02-17T01:39:30.238Z",
+      "updatedAt": "2026-02-17T01:39:30.238Z",
+      "userId": "user-1771220528104",
+      "id": 15
+    },
+    {
+      "title": "dasdsad",
+      "description": "dsadasd",
+      "status": "TODO",
+      "position": 1,
+      "createdAt": "2026-02-17T02:12:54.480Z",
+      "updatedAt": "2026-03-01T18:06:50.479Z",
+      "userId": "user-1771290921689",
+      "id": 17,
+      "subtasks": [
+        {
+          "id": "sub-17-1",
+          "title": "Pesquisar referências",
+          "completed": true
+        },
+        {
+          "id": "sub-17-3",
+          "title": "Revisar conteúdo",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "eqwe",
+      "description": "eqwe",
+      "status": "TODO",
+      "position": 0,
+      "createdAt": "2026-02-20T06:20:27.717Z",
+      "updatedAt": "2026-03-01T17:47:18.352Z",
+      "userId": "user-1771290921689",
+      "id": 18
+    },
+    {
+      "title": "dsaasdsd",
+      "description": "dsadd asd\nds\ndas\nd\nas\nd\nasd\nd",
+      "status": "TODO",
+      "position": 3,
+      "createdAt": "2026-02-20T06:29:13.928Z",
+      "updatedAt": "2026-03-01T17:04:44.536Z",
+      "userId": "user-1771290921689",
+      "id": 19
+    },
+    {
+      "title": "wsdwqr",
+      "description": "rewr\nrwerew",
+      "status": "TODO",
+      "position": 1,
+      "createdAt": "2026-03-01T16:52:14.726Z",
+      "updatedAt": "2026-03-01T17:47:19.262Z",
+      "userId": "user-1771290921689",
+      "id": 20,
+      "subtasks": [
+        {
+          "id": "sub-20-1",
+          "title": "Definir escopo",
+          "completed": true
+        },
+        {
+          "id": "sub-20-2",
+          "title": "Implementar feature",
+          "completed": true
+        },
+        {
+          "id": "sub-20-3",
+          "title": "Escrever testes",
+          "completed": false
+        },
+        {
+          "id": "sub-20-4",
+          "title": "Code review",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "title": "hujhh",
+      "description": "ijhhujhk",
+      "status": "TODO",
+      "position": 4,
+      "createdAt": "2026-03-01T17:08:02.585Z",
+      "updatedAt": "2026-03-01T17:08:02.585Z",
+      "userId": "user-1771290921689",
+      "id": 21
+    },
+    {
+      "title": "novo",
+      "description": "teste",
+      "status": "TODO",
+      "position": 3,
+      "createdAt": "2026-03-01T17:32:11.472Z",
+      "updatedAt": "2026-03-01T17:44:49.340Z",
+      "userId": "user-1771290921689",
+      "id": 22,
+      "subtasks": [
+        {
+          "id": "sub-22-1772386863428",
+          "title": "teste",
+          "completed": false
+        },
+        {
+          "id": "sub-22-1772386888868",
+          "title": "dsdasdas",
+          "completed": false
+        },
+        {
+          "id": "sub-22-1772387089340",
+          "title": "subtask 1",
+          "completed": false
+        }
+      ]
+    }
+  ],
+  "checklistItems": [],
+  "taskNotes": [],
+  "focusSessions": [],
+  "cognitiveAlerts": [],
+  "telemetryEvents": []
+}
