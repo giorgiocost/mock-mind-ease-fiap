@@ -262,6 +262,7 @@ module.exports = (routerDb) => (req, res, next) => {
 
     db.users.push(newUser);
     saveDb(db);
+    routerDb.set('users', db.users).write();
 
     // Gerar tokens JWT
     const accessToken = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: '1h' });
@@ -439,6 +440,7 @@ module.exports = (routerDb) => (req, res, next) => {
 
         db.preferences.push(preferences);
         saveDb(db);
+        routerDb.set('preferences', db.preferences).write();
       } else {
         console.log(`  ↳ ⚙️  Preferences: Retornando preferências existentes`);
       }
@@ -576,6 +578,7 @@ module.exports = (routerDb) => (req, res, next) => {
       }
 
       saveDb(db);
+      routerDb.set('preferences', db.preferences).write();
       return res.status(200).json(preferences);
     } catch (error) {
       console.log(`  ↳ ❌ Preferences: Token inválido ou expirado`);
@@ -847,6 +850,7 @@ module.exports = (routerDb) => (req, res, next) => {
       const index = db.tasks.findIndex(t => t.id === taskId);
       db.tasks[index] = task;
       saveDb(db);
+      routerDb.set('tasks', db.tasks).write();
 
       console.log(`  ↳ ↔️  Task ${taskId} moved to ${toStatus} (position: ${task.position})`);
 
