@@ -14,8 +14,21 @@ Error: The Edge Function "middleware" is referencing unsupported modules:
 ## ✅ Solução Implementada
 
 1. **Renomeado `middleware.js` → `custom-middleware.js`**: Evita detecção automática do Vercel
-2. **Criado `vercel.json`**: Configurado para usar Node.js runtime
-3. **Modificado `server.js`**: Exporta o servidor como módulo para funcionar no Vercel serverless
+2. **Criado `/api/index.js`**: Handler serverless que importa o servidor
+3. **Reestruturado `vercel.json`**: Usa rewrites para direcionar todas as rotas para `/api`
+4. **Modificado `server.js`**: Exporta o servidor como função para funcionar no Vercel serverless
+
+### Estrutura de Deploy:
+```
+/
+├── api/
+│   └── index.js          # Handler serverless (todas as rotas passam por aqui)
+├── server.js             # Servidor JSON configurado (exportado como módulo)
+├── custom-middleware.js  # Middleware customizado
+├── db.json               # Database
+├── routes.json           # Mapeamento de rotas
+└── vercel.json           # Configuração do Vercel
+```
 
 ## 📋 Configurar Variáveis de Ambiente no Vercel
 
@@ -74,7 +87,7 @@ Ou use o Git integration do Vercel (recomendado):
 
 ## 🧪 Testar após Deploy
 
-Após o deploy, teste os endpoints:
+Após o deploy, teste os endpoints (substitua `seu-projeto.vercel.app` pela sua URL):
 
 ```bash
 # Health check
@@ -83,9 +96,32 @@ curl https://seu-projeto.vercel.app/health
 # API info
 curl https://seu-projeto.vercel.app/api/v1
 
-# Swagger docs
-# Abra no navegador: https://seu-projeto.vercel.app/api-docs
+# Listar usuários
+curl https://seu-projeto.vercel.app/api/v1/users
+
+# Listar tasks
+curl https://seu-projeto.vercel.app/api/v1/tasks
+
+# Preferências de um usuário
+curl https://seu-projeto.vercel.app/api/v1/preferences?userId=user-1771290921689
+
+# Swagger docs (abra no navegador)
+# https://seu-projeto.vercel.app/api-docs
 ```
+
+### Testando com Autenticação:
+
+```bash
+# Fazer requisição com token
+curl -H "Authorization: Bearer seu-token-aqui" \
+     https://seu-projeto.vercel.app/api/v1/tasks
+```
+
+### URLs importantes:
+- **API Base:** `https://seu-projeto.vercel.app/api/v1`
+- **Health:** `https://seu-projeto.vercel.app/health`
+- **Docs:** `https://seu-projeto.vercel.app/api-docs`
+- **OpenAPI JSON:** `https://seu-projeto.vercel.app/swagger.json`
 
 ## ⚠️ Limitações do Vercel (Serverless)
 

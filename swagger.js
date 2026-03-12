@@ -16,16 +16,35 @@ const options = {
 
 Backend mock completo para o projeto MindEase - Plataforma de Gestão de Saúde Mental.
 
-## 🎯 Funcionalidades
+## 🎯 Funcionalidades Implementadas
 
-- **Autenticação JWT** (Access + Refresh tokens)
-- **Gestão de Preferências** do usuário (acessibilidade cognitiva)
-- **CRUD Completo de Tarefas** (TODO, DOING, DONE)
-- **Checklist Items** por tarefa
-- **Task Notes** (notas das tarefas)
-- **Focus Sessions** (Pomodoro/sessões de foco)
-- **Cognitive Alerts** (alertas cognitivos)
-- **Telemetry Events** (rastreamento de eventos)
+### ✅ Autenticação
+- **Register** (POST /auth/register) - Criar nova conta
+- **Login** (POST /auth/login) - Autenticar e obter JWT tokens
+- Tokens JWT (Access Token: 1h, Refresh Token: 7 dias)
+
+### ⚙️ Preferências de Usuário
+- **GET /preferences** - Obter preferências (cria defaults se não existir)
+- **PUT /preferences** - Atualizar preferências (partial update)
+- Configurações de acessibilidade cognitiva completas
+
+### 📋 Gestão de Tarefas (Kanban)
+- **CRUD Completo** de tarefas (TODO, DOING, DONE)
+- **Move Task** (POST /tasks/:id/move) - Mover entre colunas
+- Filtro automático por usuário autenticado
+- Posicionamento customizável nas colunas
+
+### ✅ Subtarefas (Subtasks)
+- **GET /tasks/:id/subtasks** - Listar subtasks de uma tarefa
+- **POST /tasks/:id/subtasks** - Criar nova subtask
+- **PATCH /tasks/:id/subtasks/:subtaskId** - Atualizar (toggle completed, editar título)
+- **DELETE /tasks/:id/subtasks/:subtaskId** - Remover subtask
+- Armazenamento inline nas tasks
+
+### 🔜 Próximas Funcionalidades
+- Focus Sessions (Pomodoro/timers)
+- Cognitive Alerts (alertas cognitivos)
+- Telemetry Events (rastreamento de eventos)
 
 ## 🔐 Como Autenticar
 
@@ -37,7 +56,7 @@ Backend mock completo para o projeto MindEase - Plataforma de Gestão de Saúde 
 
 3. **Clique em "Authorize"** (🔓) no topo desta página
 
-4. **Cole o token** no formato: \`Bearer <seu-token-aqui>\`
+4. **Cole o token** (apenas o token, sem "Bearer"): \`eyJhbGci...\`
 
 5. **Agora você pode testar** todos os endpoints protegidos! 🎉
 
@@ -45,12 +64,20 @@ Backend mock completo para o projeto MindEase - Plataforma de Gestão de Saúde 
 
 - **Base URL:** http://localhost:3333/api/v1
 - **Health Check:** http://localhost:3333/health
-- **Testes E2E:** 35/35 passando (100%)
+- **Versão:** 2.0.0
 - **Ambiente:** Development (JSON Server Mock)
 
 ## 🧪 Testando a API
 
 Use o botão **"Try it out"** em cada endpoint para testar diretamente pela interface.
+
+## 📝 Exemplos de Uso
+
+### Credenciais de Teste
+\`\`\`
+Email: daniel@example.com
+Senha: Senha@123
+\`\`\`
       `,
       contact: {
         name: 'MindEase Development Team',
@@ -255,8 +282,8 @@ Use o botão **"Try it out"** em cada endpoint para testar diretamente pela inte
             alertThresholdMinutes: { 
               type: 'number', 
               example: 25,
-              minimum: 15,
-              maximum: 120,
+              minimum: 10,
+              maximum: 180,
               description: 'Limite para alertas cognitivos (minutos)'
             },
             createdAt: { 
@@ -310,8 +337,8 @@ Use o botão **"Try it out"** em cada endpoint para testar diretamente pela inte
             },
             alertThresholdMinutes: { 
               type: 'number',
-              minimum: 15,
-              maximum: 120
+              minimum: 10,
+              maximum: 180
             }
           }
         },
@@ -541,7 +568,7 @@ Use o botão **"Try it out"** em cada endpoint para testar diretamente pela inte
       }
     ]
   },
-  apis: ['./middleware.js', './server.js'], // Arquivos com JSDoc comments
+  apis: ['./custom-middleware.js', './server.js'], // Arquivos com JSDoc comments
 };
 
 const swaggerSpec = swaggerJsdoc(options);
