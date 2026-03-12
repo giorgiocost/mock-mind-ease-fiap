@@ -9,12 +9,13 @@ Error: The Edge Function "middleware" is referencing unsupported modules:
 	- jsonwebtoken: crypto
 ```
 
-Foi causado porque o Vercel tentava rodar o middleware como Edge Function, mas o código usa módulos Node.js (`fs`, `path`, `crypto`) que não são suportados no Edge Runtime.
+**Causa raiz:** O Vercel detecta automaticamente qualquer arquivo chamado `middleware.js` na raiz e tenta executá-lo como **Edge Middleware**, independentemente das configurações. O Edge Runtime não suporta módulos Node.js como `fs`, `path`, `crypto`.
 
 ## ✅ Solução Implementada
 
-1. **Criado `vercel.json`**: Configurado para usar Node.js runtime ao invés de Edge runtime
-2. **Modificado `server.js`**: Exporta o servidor como módulo para funcionar no Vercel serverless
+1. **Renomeado `middleware.js` → `custom-middleware.js`**: Evita detecção automática do Vercel
+2. **Criado `vercel.json`**: Configurado para usar Node.js runtime
+3. **Modificado `server.js`**: Exporta o servidor como módulo para funcionar no Vercel serverless
 
 ## 📋 Configurar Variáveis de Ambiente no Vercel
 

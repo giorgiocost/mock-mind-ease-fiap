@@ -31,7 +31,7 @@ const middlewares = jsonServer.defaults();
 
 // Carregar configurações externas
 const routes = require('./routes.json');
-const customMiddleware = require('./middleware');
+const customMiddleware = require('./custom-middleware');
 
 // ========================================
 // MIDDLEWARES
