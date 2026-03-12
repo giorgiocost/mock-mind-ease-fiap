@@ -28,3 +28,7 @@ npm-debug.log
 *.swp
 *.swo
 *~
+
+# Não processar middleware como Edge
+middleware.js
+middleware.ts
