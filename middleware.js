@@ -55,7 +55,7 @@ module.exports = (routerDb) => (req, res, next) => {
   const timestamp = new Date().toISOString();
   const method = req.method.padEnd(7, ' ');
   const url = req.url;
-  
+
   console.log(`[${timestamp}] ${method} ${url}`);
 
   // ==========================================
@@ -63,13 +63,13 @@ module.exports = (routerDb) => (req, res, next) => {
   // ==========================================
   if (['POST', 'PUT', 'PATCH'].includes(req.method) && req.body) {
     const now = new Date().toISOString();
-    
+
     if (req.method === 'POST') {
       req.body.createdAt = now;
       req.body.updatedAt = now;
       console.log(`  ↳ ��� Timestamps adicionados: createdAt, updatedAt`);
     }
-    
+
     if (req.method === 'PUT' || req.method === 'PATCH') {
       req.body.updatedAt = now;
       console.log(`  ↳ ��� Timestamp atualizado: updatedAt`);
@@ -80,15 +80,15 @@ module.exports = (routerDb) => (req, res, next) => {
   // 3. MOCK DE AUTENTICAÇÃO (Bearer Token)
   // ==========================================
   const authHeader = req.headers.authorization;
-  
+
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.substring(7);
-    
+
     // Mock: aceita qualquer token (sem validação real)
     // Em produção, usaria JWT verify aqui
     req.userId = 'mock-user-id-123';
     req.userEmail = 'mock@example.com';
-    
+
     console.log(`  ↳ ��� Auth: Token recebido (mock userId: ${req.userId})`);
   }
 
@@ -97,7 +97,7 @@ module.exports = (routerDb) => (req, res, next) => {
   // ==========================================
   if (req.method === 'POST' && req.body) {
     const path = req.path || req.url;
-    
+
     // Validar users
     if (path.includes('/users')) {
       if (!req.body.email || !req.body.name) {
@@ -111,7 +111,7 @@ module.exports = (routerDb) => (req, res, next) => {
           }
         });
       }
-      
+
       // Validar formato de email básico
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(req.body.email)) {
@@ -121,10 +121,10 @@ module.exports = (routerDb) => (req, res, next) => {
           message: 'Invalid email format'
         });
       }
-      
+
       console.log(`  ↳ ✅ Validação: user OK`);
     }
-    
+
     // Validar tasks (mas não /move)
     if (path.includes('/tasks') && !path.includes('/move')) {
       if (!req.body.title || req.body.title.trim() === '') {
@@ -134,10 +134,10 @@ module.exports = (routerDb) => (req, res, next) => {
           message: 'title is required and cannot be empty'
         });
       }
-      
+
       console.log(`  ↳ ✅ Validação: task OK`);
     }
-    
+
     // Validar preferences
     if (path.includes('/preferences')) {
       // Validar ranges numéricos
@@ -151,7 +151,7 @@ module.exports = (routerDb) => (req, res, next) => {
           });
         }
       }
-      
+
       if (req.body.spacingScale !== undefined) {
         const spacingScale = parseFloat(req.body.spacingScale);
         if (isNaN(spacingScale) || spacingScale < 0.9 || spacingScale > 1.4) {
@@ -162,7 +162,7 @@ module.exports = (routerDb) => (req, res, next) => {
           });
         }
       }
-      
+
       if (req.body.alertThresholdMinutes !== undefined) {
         const threshold = parseInt(req.body.alertThresholdMinutes);
         if (isNaN(threshold) || threshold < 10 || threshold > 180) {
@@ -262,6 +262,7 @@ module.exports = (routerDb) => (req, res, next) => {
 
     db.users.push(newUser);
     saveDb(db);
+    routerDb.set('users', db.users).write();
 
     // Gerar tokens JWT
     const accessToken = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: '1h' });
@@ -366,7 +367,7 @@ module.exports = (routerDb) => (req, res, next) => {
   // ==========================================
   // 7. PREFERENCES ENDPOINTS
   // ==========================================
-  
+
   /**
    * @swagger
    * /preferences:
@@ -439,6 +440,7 @@ module.exports = (routerDb) => (req, res, next) => {
 
         db.preferences.push(preferences);
         saveDb(db);
+        routerDb.set('preferences', db.preferences).write();
       } else {
         console.log(`  ↳ ⚙️  Preferences: Retornando preferências existentes`);
       }
@@ -511,7 +513,7 @@ module.exports = (routerDb) => (req, res, next) => {
 
       // Validações básicas (já feitas no middleware de validação, mas reforçando)
       const { fontScale, spacingScale, alertThresholdMinutes } = req.body;
-      
+
       if (fontScale !== undefined && (fontScale < 0.9 || fontScale > 1.4)) {
         console.log(`  ↳ ❌ Preferences: fontScale fora do range`);
         return res.status(400).json({
@@ -576,6 +578,7 @@ module.exports = (routerDb) => (req, res, next) => {
       }
 
       saveDb(db);
+      routerDb.set('preferences', db.preferences).write();
       return res.status(200).json(preferences);
     } catch (error) {
       console.log(`  ↳ ❌ Preferences: Token inválido ou expirado`);
@@ -641,7 +644,7 @@ module.exports = (routerDb) => (req, res, next) => {
 
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      
+
       // Validar campos obrigatórios
       if (!req.body.title || req.body.title.trim() === '') {
         console.log(`  ↳ ❌ Tasks: title é obrigatório`);
@@ -709,10 +712,10 @@ module.exports = (routerDb) => (req, res, next) => {
 
       try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        
+
         // Adicionar filtro userId à query
         const urlObj = new URL(req.url, `http://localhost:3333`);
-        
+
         // Se não tiver userId na query, adicionar
         if (!urlObj.searchParams.has('userId')) {
           urlObj.searchParams.set('userId', decoded.userId);
@@ -817,10 +820,10 @@ module.exports = (routerDb) => (req, res, next) => {
       }
 
       const db = getDb();
-      
+
       // Buscar task
       const task = db.tasks.find(t => t.id === taskId);
-      
+
       if (!task) {
         console.log(`  ↳ ❌ Tasks: Task ${taskId} não encontrada`);
         return res.status(404).json({
@@ -847,6 +850,7 @@ module.exports = (routerDb) => (req, res, next) => {
       const index = db.tasks.findIndex(t => t.id === taskId);
       db.tasks[index] = task;
       saveDb(db);
+      routerDb.set('tasks', db.tasks).write();
 
       console.log(`  ↳ ↔️  Task ${taskId} moved to ${toStatus} (position: ${task.position})`);
 
@@ -989,32 +993,58 @@ module.exports = (routerDb) => (req, res, next) => {
    *             schema:
    *               $ref: '#/components/schemas/Error'
    */
-  // DELETE /api/v1/tasks/:id - Ownership check
+  // DELETE /api/v1/tasks/:id - Ownership & manual delete
   if (req.method === 'DELETE' && req.url.match(/^\/api\/v1\/tasks\/[^/]+$/)) {
     const authHeader = req.headers.authorization;
 
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.substring(7);
+    // require bearer token
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      console.log(`  ↳ ❌ Tasks: DELETE sem Authorization`);
+      return res.status(401).json({
+        error: 'UnauthorizedError',
+        message: 'Missing or invalid Authorization header',
+      });
+    }
 
-      try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        const taskIdStr = req.url.split('/')[4];
-        const taskId = isNaN(taskIdStr) ? taskIdStr : Number(taskIdStr);
-        const db = getDb();
-        const task = db.tasks.find(t => t.id === taskId);
+    const token = authHeader.substring(7);
 
-        if (task && task.userId !== decoded.userId) {
-          console.log(`  ↳ ❌ Tasks: Usuário ${decoded.userId} não possui task ${taskId}`);
-          return res.status(403).json({
-            error: 'ForbiddenError',
-            message: 'You do not own this task',
-          });
-        }
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      const taskId = req.url.split('/')[4];
+      const db = getDb();
+      const task = db.tasks.find(t => String(t.id) === String(taskId));
 
-        console.log(`  ↳ 🗑️  Deleting task ${taskId}`);
-      } catch (error) {
-        // Token inválido, deixa passar (JSON Server retornará erro)
+      if (task && task.userId !== decoded.userId) {
+        console.log(`  ↳ ❌ Tasks: Usuário ${decoded.userId} não possui task ${taskId}`);
+        return res.status(403).json({
+          error: 'ForbiddenError',
+          message: 'You do not own this task',
+        });
       }
+
+      // Manual deletion to avoid JSON Server wiping other tasks
+      console.log(`  ↳ 🗑️  Deleting task ${taskId}`);
+      // remove item from db and save
+      const index = db.tasks.findIndex(t => String(t.id) === String(taskId));
+      if (index === -1) {
+        // should not happen, but handle gracefully
+        return res.status(404).json({
+          error: 'NotFoundError',
+          message: 'Task not found',
+        });
+      }
+      db.tasks.splice(index, 1);
+      saveDb(db);
+      routerDb.set('tasks', db.tasks).write();
+
+      // respond and stop middleware chain
+      return res.status(200).json({ message: 'Task deleted successfully' });
+    } catch (error) {
+      console.log(`  ↳ ❌ Tasks: Token inválido na deleção`);
+      return res.status(401).json({
+        error: 'UnauthorizedError',
+        message: 'Invalid or expired token',
+      });
     }
   }
 

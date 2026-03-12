@@ -114,12 +114,24 @@ echo ""
 
 # 8. Deletar task (DELETE)
 echo "8. Deletando segunda task (DELETE /api/v1/tasks/$TASK2_ID)..."
+# contar tasks antes
+BEFORE_DELETE_COUNT=$(echo "$TASKS_LIST" | grep -o '"id"' | wc -l)
+
 DELETE_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
   -X DELETE "$BASE_URL/tasks/$TASK2_ID" \
   -H "Authorization: Bearer $TOKEN")
 
 if [ "$DELETE_STATUS" == "200" ]; then
   echo "   ✅ Task deletada (status: $DELETE_STATUS)"
+  # checar se apenas uma task sumiu
+  AFTER_DELETE_LIST=$(curl -s -X GET "$BASE_URL/tasks" \
+    -H "Authorization: Bearer $TOKEN")
+  AFTER_DELETE_COUNT=$(echo "$AFTER_DELETE_LIST" | grep -o '"id"' | wc -l)
+  if [ $((BEFORE_DELETE_COUNT - AFTER_DELETE_COUNT)) -eq 1 ]; then
+    echo "   ✅ Apenas uma task removida (antes: $BEFORE_DELETE_COUNT, depois: $AFTER_DELETE_COUNT)"
+  else
+    echo "   ❌ Algo estranho: counts before=$BEFORE_DELETE_COUNT after=$AFTER_DELETE_COUNT"
+  fi
 else
   echo "   ❌ Falha ao deletar task (status: $DELETE_STATUS)"
 fi
