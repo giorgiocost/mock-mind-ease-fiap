@@ -21,6 +21,7 @@ Backend mock completo para o projeto MindEase - Plataforma de Gestão de Saúde 
 ### ✅ Autenticação
 - **Register** (POST /auth/register) - Criar nova conta
 - **Login** (POST /auth/login) - Autenticar e obter JWT tokens
+- **Refresh** (POST /auth/refresh) - Renovar access token usando refresh token
 - Tokens JWT (Access Token: 1h, Refresh Token: 7 dias)
 
 ### ⚙️ Preferências de Usuário

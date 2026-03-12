@@ -364,6 +364,99 @@ module.exports = (routerDb) => (req, res, next) => {
     });
   }
 
+  /**
+   * @swagger
+   * /auth/refresh:
+   *   post:
+   *     summary: Refresh access token
+   *     description: Generates a new access token using a valid refresh token.
+   *     tags: [Auth]
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - refreshToken
+   *             properties:
+   *               refreshToken:
+   *                 type: string
+   *                 description: Valid refresh token received from login or register
+   *                 example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+   *     responses:
+   *       200:
+   *         description: Token refreshed successfully
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 accessToken:
+   *                   type: string
+   *                   description: New JWT access token (valid for 1 hour)
+   *                 refreshToken:
+   *                   type: string
+   *                   description: New refresh token (valid for 7 days)
+   *       400:
+   *         description: Validation error - missing refresh token
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Error'
+   *       401:
+   *         description: Invalid or expired refresh token
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Error'
+   */
+  // POST /api/v1/auth/refresh
+  if (req.method === 'POST' && req.url === '/api/v1/auth/refresh') {
+    const { refreshToken } = req.body;
+
+    // Validação
+    if (!refreshToken) {
+      console.log(`  ↳ ❌ Auth: RefreshToken ausente`);
+      return res.status(400).json({
+        error: 'ValidationError',
+        message: 'refreshToken is required',
+      });
+    }
+
+    try {
+      // Verificar refresh token
+      const decoded = jwt.verify(refreshToken, JWT_SECRET);
+      
+      const db = getDb();
+      const user = db.users.find((u) => u.id === decoded.userId);
+
+      if (!user) {
+        console.log(`  ↳ ❌ Auth: Usuário não encontrado no refresh`);
+        return res.status(401).json({
+          error: 'UnauthorizedError',
+          message: 'User not found',
+        });
+      }
+
+      // Gerar novos tokens
+      const newAccessToken = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: JWT_ACCESS_EXPIRY });
+      const newRefreshToken = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: JWT_REFRESH_EXPIRY });
+
+      console.log(`  ↳ ✅ Auth: Token renovado com sucesso para userId ${user.id}`);
+      return res.status(200).json({
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken,
+      });
+    } catch (error) {
+      console.log(`  ↳ ❌ Auth: RefreshToken inválido ou expirado - ${error.message}`);
+      return res.status(401).json({
+        error: 'UnauthorizedError',
+        message: 'Invalid or expired refresh token',
+      });
+    }
+  }
+
   // ==========================================
   // 7. PREFERENCES ENDPOINTS
   // ==========================================
