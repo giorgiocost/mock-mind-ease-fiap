@@ -55,13 +55,22 @@ npm i -g vercel
 # Fazer login
 vercel login
 
-# Deploy
-vercel --prod
+# Deploy (sem cache para garantir build limpo)
+vercel --prod --force
 ```
+
+**⚠️ Importante:** Se o erro de Edge Middleware persistir:
+1. Acesse o projeto no Vercel Dashboard
+2. Vá em **Settings** → **General**
+3. Role até **Build & Development Settings**
+4. Em **Framework Preset**, selecione **Other**
+5. Clique em **Save**
+6. Force um novo deploy: **Deployments** → último deploy → **⋯** → **Redeploy** → marque **"Use existing build cache: No"**
 
 Ou use o Git integration do Vercel (recomendado):
 - Conecte seu repositório GitHub/GitLab/Bitbucket ao Vercel
 - O deploy acontece automaticamente a cada push na branch principal
+- **Cache já foi limpo com os últimos commits**
 
 ## 🧪 Testar após Deploy
 
@@ -98,3 +107,41 @@ Para produção, considere substituir json-server por:
 - [Vercel Node.js](https://vercel.com/docs/functions/serverless-functions/runtimes/node-js)
 - [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables)
 - [JSON Server](https://github.com/typicode/json-server)
+
+---
+
+## 🔧 Troubleshooting
+
+### Erro: "Edge Function middleware is referencing unsupported modules"
+
+**Causa:** O Vercel detectou automaticamente um arquivo `middleware.js` e tentou executá-lo como Edge Middleware.
+
+**Soluções aplicadas:**
+- ✅ Renomeado para `custom-middleware.js`
+- ✅ Adicionado ao `.vercelignore`
+- ✅ Simplificado `vercel.json` para forçar Node.js runtime
+
+**Se ainda persistir:**
+1. No Vercel Dashboard, vá em **Settings** → **General**
+2. Em **Framework Preset**, selecione **Other**
+3. Force um redeploy sem cache (ver seção Deploy acima)
+
+### Timeout ou limite de memória
+
+Se necessário, ajuste no `vercel.json`:
+```json
+{
+  "functions": {
+    "server.js": {
+      "maxDuration": 10,
+      "memory": 1024
+    }
+  }
+}
+```
+
+### db.json não persiste dados
+
+Isso é normal no Vercel (serverless). Para produção:
+- Use banco de dados externo (MongoDB Atlas, Supabase)
+- Ou hospede em plataforma com filesystem persistente (Render, Railway)
