@@ -1,0 +1,30 @@
+# Arquivos de teste
+*.sh
+test-*.sh
+manual-*.sh
+*test*.md
+TESTING.md
+
+# Backups
+*.backup.*
+db.json.backup*
+
+# Relatórios
+*REPORT.md
+relatorio-*.md
+
+# Documentação local
+melhorias.md
+
+# Node
+node_modules
+npm-debug.log
+.env.local
+.env.*.local
+
+# Editor
+.vscode
+.idea
+*.swp
+*.swo
+*~

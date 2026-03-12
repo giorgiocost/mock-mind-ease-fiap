@@ -45,18 +45,18 @@
     {
       "id": "pref-1771294414966",
       "userId": "user-1771290921689",
-      "uiDensity": "simple",
-      "focusMode": true,
+      "uiDensity": "medium",
+      "focusMode": false,
       "contentMode": "detailed",
-      "contrast": "normal",
-      "fontScale": 1.4,
-      "spacingScale": 1.1,
+      "contrast": "low",
+      "fontScale": 1,
+      "spacingScale": 1,
       "motion": "full",
       "timersEnabled": true,
       "breakReminders": true,
       "alertThresholdMinutes": 25,
       "createdAt": "2026-02-17T02:13:34.966Z",
-      "updatedAt": "2026-02-17T02:33:53.634Z"
+      "updatedAt": "2026-03-02T23:22:57.806Z"
     }
   ],
   "tasks": [
@@ -66,9 +66,16 @@
       "status": "TODO",
       "position": 0,
       "createdAt": "2026-02-17T01:19:53.833Z",
-      "updatedAt": "2026-02-17T01:19:53.833Z",
+      "updatedAt": "2026-03-01T19:19:03.140Z",
       "userId": "user-1771220528104",
-      "id": 12
+      "id": 12,
+      "subtasks": [
+        {
+          "id": "sub-12-1772392731998",
+          "title": "teste 2",
+          "completed": false
+        }
+      ]
     },
     {
       "title": "aaaa",
@@ -103,10 +110,10 @@
     {
       "title": "dasdsad",
       "description": "dsadasd",
-      "status": "TODO",
+      "status": "DOING",
       "position": 1,
       "createdAt": "2026-02-17T02:12:54.480Z",
-      "updatedAt": "2026-03-01T18:06:50.479Z",
+      "updatedAt": "2026-03-02T23:20:50.249Z",
       "userId": "user-1771290921689",
       "id": 17,
       "subtasks": [
@@ -125,12 +132,24 @@
     {
       "title": "eqwe",
       "description": "eqwe",
-      "status": "TODO",
+      "status": "DONE",
       "position": 0,
       "createdAt": "2026-02-20T06:20:27.717Z",
-      "updatedAt": "2026-03-01T17:47:18.352Z",
+      "updatedAt": "2026-03-02T23:20:48.779Z",
       "userId": "user-1771290921689",
-      "id": 18
+      "id": 18,
+      "subtasks": [
+        {
+          "id": "sub-18-1772493638774",
+          "title": "teste",
+          "completed": true
+        },
+        {
+          "id": "sub-18-1772493646208",
+          "title": "dsfgdsfg",
+          "completed": true
+        }
+      ]
     },
     {
       "title": "dsaasdsd",
@@ -145,31 +164,16 @@
     {
       "title": "wsdwqr",
       "description": "rewr\nrwerew",
-      "status": "TODO",
+      "status": "DOING",
       "position": 1,
       "createdAt": "2026-03-01T16:52:14.726Z",
-      "updatedAt": "2026-03-01T17:47:19.262Z",
+      "updatedAt": "2026-03-02T23:20:51.312Z",
       "userId": "user-1771290921689",
       "id": 20,
       "subtasks": [
         {
-          "id": "sub-20-1",
-          "title": "Definir escopo",
-          "completed": true
-        },
-        {
-          "id": "sub-20-2",
-          "title": "Implementar feature",
-          "completed": true
-        },
-        {
           "id": "sub-20-3",
           "title": "Escrever testes",
-          "completed": false
-        },
-        {
-          "id": "sub-20-4",
-          "title": "Code review",
           "completed": false
         }
       ]

@@ -201,17 +201,25 @@ validateEnvironment();
 const PORT = process.env.PORT || 3333;
 const HOST = process.env.HOST || 'localhost';
 
-server.listen(PORT, () => {
-  console.log('\n' + '='.repeat(50));
-  console.log('��� MindEase Backend Mock - JSON Server');
-  console.log('='.repeat(50));
-  console.log(`��� Servidor rodando em: http://${HOST}:${PORT}`);
-  console.log(`��� API Base URL:        http://${HOST}:${PORT}/api/v1`);
-  console.log(`��� Health Check:        http://${HOST}:${PORT}/health`);
-  console.log(`��� Database:            ${path.join(__dirname, 'db.json')}`);  console.log(`🌍 Environment:         ${process.env.NODE_ENV || 'development'}`);  console.log('='.repeat(50));
-  console.log('��� Use Ctrl+C para parar o servidor');
-  console.log('��� Logs de requisições aparecerão abaixo:\n');
-});
+// Exportar o servidor para o Vercel (serverless)
+module.exports = server;
+
+// Se não estiver rodando no Vercel, iniciar o servidor normalmente
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log('\n' + '='.repeat(50));
+    console.log('🚀 MindEase Backend Mock - JSON Server');
+    console.log('='.repeat(50));
+    console.log(`🔗 Servidor rodando em: http://${HOST}:${PORT}`);
+    console.log(`📡 API Base URL:        http://${HOST}:${PORT}/api/v1`);
+    console.log(`💚 Health Check:        http://${HOST}:${PORT}/health`);
+    console.log(`💾 Database:            ${path.join(__dirname, 'db.json')}`);
+    console.log(`🌍 Environment:         ${process.env.NODE_ENV || 'development'}`);
+    console.log('='.repeat(50));
+    console.log('⏹️  Use Ctrl+C para parar o servidor');
+    console.log('📋 Logs de requisições aparecerão abaixo:\n');
+  });
+}
 
 // ========================================
 // TRATAMENTO DE ERROS
