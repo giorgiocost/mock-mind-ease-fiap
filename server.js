@@ -26,7 +26,15 @@ const swaggerSpec = require('./swagger');
 
 // Criar instâncias do JSON Server
 const server = jsonServer.create();
-const router = jsonServer.router(path.join(__dirname, 'db.json'));
+
+// Em ambientes serverless (Vercel) o filesystem é read-only (/var/task/).
+// Usar o adaptador in-memory passando o objeto JSON diretamente.
+// Em desenvolvimento, usar o adaptador FileSync normal (persiste em disco).
+const IS_SERVERLESS = !!(process.env.VERCEL || process.env.VERCEL_ENV);
+const router = IS_SERVERLESS
+  ? jsonServer.router(require('./db.json'))
+  : jsonServer.router(path.join(__dirname, 'db.json'));
+
 const middlewares = jsonServer.defaults();
 
 // Carregar configurações externas

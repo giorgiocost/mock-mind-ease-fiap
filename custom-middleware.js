@@ -12,8 +12,6 @@
  */
 
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
 
 // ========================================
 // CONFIGURAÇÃO DE JWT
@@ -35,20 +33,17 @@ const JWT_SECRET = process.env.JWT_SECRET || (() => {
 const JWT_ACCESS_EXPIRY = process.env.JWT_ACCESS_EXPIRY || '1h';
 const JWT_REFRESH_EXPIRY = process.env.JWT_REFRESH_EXPIRY || '7d';
 
-// Helper para ler db.json
-const getDb = () => {
-  const dbPath = path.join(__dirname, 'db.json');
-  const rawData = fs.readFileSync(dbPath, 'utf-8');
-  return JSON.parse(rawData);
-};
+module.exports = (routerDb) => {
+  // Ler dados diretamente do estado in-memory do lowdb.
+  // Em desenvolvimento (FileSync) o estado é sincronizado com db.json.
+  // Em produção serverless (Memory) o estado vive apenas em memória.
+  const getDb = () => routerDb.getState();
 
-// Helper para salvar db.json
-const saveDb = (db) => {
-  const dbPath = path.join(__dirname, 'db.json');
-  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf-8');
-};
+  // saveDb é um no-op: a persistência é feita exclusivamente via
+  // routerDb.set(...).write(), que o lowdb já chama nos lugares corretos.
+  const saveDb = () => {};
 
-module.exports = (routerDb) => (req, res, next) => {
+  return (req, res, next) => {
   // ==========================================
   // 1. LOGGING DE REQUISIÇÕES
   // ==========================================
@@ -1377,8 +1372,9 @@ module.exports = (routerDb) => (req, res, next) => {
     return res.status(200).json({ message: 'Subtask deleted successfully' });
   }
 
-  // ==========================================
-  // CONTINUAR PARA PRÓXIMO MIDDLEWARE
-  // ==========================================
-  next();
+    // ==========================================
+    // CONTINUAR PARA PRÓXIMO MIDDLEWARE
+    // ==========================================
+    next();
+  };
 };
