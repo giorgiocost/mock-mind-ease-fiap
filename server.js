@@ -91,11 +91,17 @@ server.use(customMiddleware(router.db));
  * Swagger UI - Interactive API Documentation
  * Access: http://localhost:3333/api-docs
  */
-server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+const swaggerUiOptions = {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: 'MindEase API Docs',
   customfavIcon: '/favicon.ico'
-}));
+};
+
+// Em ambiente serverless, usar serveFiles + setup em rota explícita evita
+// responder HTML para assets JS/CSS (erro: Unexpected token '<').
+server.use('/api-docs', swaggerUi.serveFiles(swaggerSpec, swaggerUiOptions));
+server.get('/api-docs', swaggerUi.setup(swaggerSpec, swaggerUiOptions));
+server.get('/api-docs/', swaggerUi.setup(swaggerSpec, swaggerUiOptions));
 
 /**
  * OpenAPI JSON Spec Download
