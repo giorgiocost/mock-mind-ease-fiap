@@ -3,7 +3,24 @@
  * MindEase Backend Mock API Documentation
  */
 
+const path = require('path');
 const swaggerJsdoc = require('swagger-jsdoc');
+
+function getPublicBaseUrl() {
+  if (process.env.PUBLIC_BASE_URL) {
+    return process.env.PUBLIC_BASE_URL.replace(/\/$/, '');
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  const host = process.env.HOST || 'localhost';
+  const port = process.env.PORT || 3333;
+  return `http://${host}:${port}`;
+}
+
+const publicBaseUrl = getPublicBaseUrl();
 
 const options = {
   definition: {
@@ -63,8 +80,8 @@ Backend mock completo para o projeto MindEase - Plataforma de Gestão de Saúde 
 
 ## 📊 Status do Ambiente
 
-- **Base URL:** http://localhost:3333/api/v1
-- **Health Check:** http://localhost:3333/health
+- **Base URL:** ${publicBaseUrl}/api/v1
+- **Health Check:** ${publicBaseUrl}/health
 - **Versão:** 2.0.0
 - **Ambiente:** Development (JSON Server Mock)
 
@@ -92,12 +109,12 @@ Senha: Senha@123
     },
     servers: [
       {
-        url: 'http://localhost:3333/api/v1',
-        description: 'Development Server - API Endpoints'
+        url: '/api/v1',
+        description: 'Servidor atual (relativo) - funciona em local e deploy'
       },
       {
-        url: 'http://localhost:3333',
-        description: 'Development Server - Base (Health Check)'
+        url: `${publicBaseUrl}/api/v1`,
+        description: 'Servidor público detectado por ambiente'
       }
     ],
     components: {
@@ -569,7 +586,10 @@ Senha: Senha@123
       }
     ]
   },
-  apis: ['./custom-middleware.js', './server.js'], // Arquivos com JSDoc comments
+  apis: [
+    path.join(__dirname, 'custom-middleware.js'),
+    path.join(__dirname, 'server.js')
+  ], // Arquivos com JSDoc comments
 };
 
 const swaggerSpec = swaggerJsdoc(options);
